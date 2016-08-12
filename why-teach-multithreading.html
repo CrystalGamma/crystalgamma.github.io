@@ -1,0 +1,11 @@
+<!DOCTYPE html><meta charset="UTF-8"><link rel=stylesheet href=style.css>
+<title>Why teach multi-threading in application development classes?</title>
+<p>Many people study Computer Science, and many times they will at one point get classes on application development.
+<p>Often, a student will be taught Java (or C#).
+While I have many gripes with that language and how it is taught (why do people teach inheritance before interfaces?), this post will be about multi-threading.
+I expect readers to have at least a fundamental grasp of what a thread is.
+<p>Let us first have a look at what threads are useful for: <ul>
+<li>having light-weight workers in a server-like process. In this context, light-weight means that creating a thread is usually much cheaper than creating a whole new process with its own address space.
+<li>doing background tasks in a GUI program
+<li>taking advantage of multiple processors (cores, hardware threads, whatever, it doesn't matter in this context) in a modern computer.
+<script src=script.js></script>
