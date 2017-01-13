@@ -1,0 +1,68 @@
+<!DOCTYPE html><meta charset=UTF-8><link rel=stylesheet href=../../style.css>
+<title>About this blog's technology</title>
+<p>As of now, I have decided not to use one of the popular blogging tools. Let me explain to you why.
+<h2>Dynamic Blogging solutions</h2>
+<p>What I mean by this term is any kind of web publishing tool that generates content at access-time. The main contender in this category is of course Wordpress.
+<p>I did not choose WP (or any other such system) for this blog (at the time of writing) because of several reasons:
+<ul>
+<li>It has a relatively long setup time: I don't want to waste time messing with configuration files and plugins. I have been procrastinating from starting a blog for too long anyway.
+<li>It requires a PHP/Ruby/Python/… capable hosting provider.
+While I do own a few domains (you might be reading this page via one of them depending on if I get around to configuring it that way) I do not have an PHP (or equivalent) hosting package right now.
+Call it laziness or stinginess, I don't want to pay for it right now.
+<li>Replication is harder: most of these systems will store my posts in a database. This makes transferring them to a different computer much more difficult, increasing switching and back-up costs.
+</ul>
+
+<h2>Static-Site generators</h2>
+<p>There are a few frameworks in this category that look promising with regards to especially the latter two points. The two most popular is probably <a href="https://jekyllrb.com/">Jekyll</a> with <a href="http://gohugo.io/">Hugo</a> being reasonably popular as well.
+There is even an <a href="https://staticsitegenerators.net/">entire website maintaining a list of such software</a>.
+I also remember <a href="https://ghost.org/">Ghost</a> being one of these, but I was surprised to see them far beyond the 10th result on <a href="https://duckduckgo.com/?q=ghost+static+site+generator">a DuckDuckgo search for “ghost static site generator”</a>.
+Also, their marketing material doesn't look like they are too interested in static sites anymore.
+<p>Anyway, these kinds of tool have a few advantages:
+<ul>
+<li>The source data is easily portable. It's usually some directory structure containing pages, usually written in some flavour of <a href="https://daringfireball.net/projects/markdown/">Markdown</a>. More on this later.
+<li>They can easily be hosted for free or nearly so; <a href="https://pages.github.com/">GitHub Pages</a> will even give you Jekyll on top, if you want to!
+</ul>
+<p>Still, I have decided not to use such a publishing solution at this point. I certainly do see their appeal.
+<p>My reasons mainly boil down to not wanting to dive into Ruby or Go (for Jekyll and Hugo respectively) to customize my site.
+While there is bound to be a usable static-site generator in one of the languages I am comfortable in (JS, Python and Rust; I could give <a href="https://github.com/cobalt-org/cobalt.rs">cobalt.rs</a> a shot), I can't help but try finding my own sweet spot between simplicity and utility.
+Which brings me to:
+
+<h2>My own solution</h2>
+<p>First, a little about Markdown. While I like the format a lot, I think it is not the right format for my internet publishing.
+I would have to choose a specific dialect and stick with it in order not to lose data later.
+<p>I also like using real unicode bullets (•) for bullet points in my private Markdown documents, both because they look better and because they are easy to type on <a href="http://neo-layout.org/">my keyboard layout</a>, among other things.
+If I wanted to turn this into HTML, I would either have to fuzz around with <span class=cli>sed</span> and other shell utilities to hack a conversion pipeline together (I actually did this for work once) or implement my own Markdown parser (or modify an existing one), neither of which I'm particularly keen on.
+<p>So, what I did is choose to write HTML directly. For sanity, of course I write the simplest possible correct HTML5:</p>
+<code>
+&lt;!DOCTYPE html&gt;&lt;meta charset=UTF-8&gt;&lt;link rel=stylesheet href=../../style.css&gt;
+&lt;title&gt;This title will be used as a headline&lt;/title&gt;
+&lt;p&gt;I take full advantage of being able to omit the &amp;lt;html&amp;gt;, &amp;lt;head&amp;gt; and &amp;lt;body&amp;gt; tags (yes, this is correct HTML5 by the &lt;a href=&quot;https://www.w3.org/TR/html5/syntax.html#the-insertion-mode&quot;&gt;spec&lt;/a&gt;!)
+&lt;p&gt;Thanks to tag omission, you can also usually leave out the closing tags for paragraphs. As you can see above, you also don't need most quotes around attributes (only if they have a space in them or end in a slash, like some URLs).
+&lt;ul&gt;
+&lt;li&gt;You can to the same
+&lt;li&gt;for bullet points, by the way!
+&lt;/ul&gt;
+&lt;script src=../../script.js&gt;&lt;/script&gt;
+</code>
+<p>If you count that, there is whopping 114 bytes of boilerplate (I'm counting the first and last line here), with the content markup being not too obstrusive, especially when you start writing longer paragraphs.
+There are two main reasons I decided to try this out.
+<ul>
+<li>The writer's reason: it keeps you focussed on the content. This is probably the reason the site generators use extremely light markup (as mentioned, usually Markdown)
+<li>The software engineers reason: it delivers the essential, and not much more. The best expression of this philosophy I know of is in <a href=http://idlewords.com>Maciej Cegłowski's</a> phenomenal talk <a href=http://idlewords.com/talks/website_obesity.htm>The Website Obesity Crisis</a> (scroll to about a third of the page): <a class=picture href=https://static.pinboard.in/ob/ob.037.jpg>the food pyramid for the web</a>.
+</ul>
+<p>If you look at the source of this page, you will see (unless I have switched to an established blogging platform by that time) that there is not even a main page heading &lt;h1&gt; – this is generated by the script from the &lt;title&gt;, along with the page header (and possibly footer, outline or whatever, at the time of writing I don't know what kind of design I want for my blog). As keeping <a href="Don't repeat yourself" href=https://en.wikipedia.org/wiki/Don%27t_repeat_yourself>DRY</a> usually does, it simplifies writing the page and improves consistency. It also allows me to switch out the design of the site without changing or rerendering the pages.
+<p>It is also an example of Progressive Enhancement, something that should be a basic principle of the web, but sadly is often neglected by the makers of web presences (including the very department I work at. The starting page of our integration environment renders a blank screen with scripts disabled). But enough with the rant.
+
+<h2>What remains to be done</h2>
+<p>While this is a very light solution for the posts themselves, the rest of the site has yet to be designed:
+<ul>
+<li>I don't have a particularly good idea for what my preferred design will look like. I think there will be a few iterations for page layout.
+<li>Atom/RSS feeds: this is the main area where I think using an established site generator would have helped me.
+	<p>I know there are many people who like using web newsfeeds. I do myself. I probably have well over a hundred feeds in my reader.
+	<p>I think I will just code my own little feed generator, which will be run whenever I promote a post from draft to published.
+<li>Possibly some kind of recommendation system? I always like this kind of feature when I get into a new blog. Likely still a ways out.
+</ul>
+<p>Regarding the blog content, I obviously still have to fill it. For the next few posts, it will probably be about technology, especially Web development, the Rust programming language and maybe I'll make a post about AI and ethics.
+<p>However, don't expect too frequent updates for the next few weeks, as I am going to be pretty busy with college and work. I expect that I will enter a schedule of weekly or more frequent posts sometime in April 2017.
+<p>So, what do you think? I don't intend to embed any comment system any time soon, mostly because of the legal and moderation troubles, but you can reach me via <a href=mailto:blog@crystalgamma.de>eMail</a> (let's see how much spam will arrive there because of this link; my only reference point is the email address that is posted in a well-known repository on GitHub, and there I get about one spam message a week, tops)
+<script src=../../script.js></script>

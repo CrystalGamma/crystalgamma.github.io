@@ -6,7 +6,8 @@
 		el.addEventListener('load', handler);
 		document.body.appendChild(el);
 	});
-	loadScript('jsonml.js').then(() => {
+	// shamelessly use URL normalization to get a path relative to this script ☺
+	loadScript(document.currentScript.src + '/../jsonml.js').then(() => {
 		const title = document.querySelector("head title").textContent;
 		document.body.insertBefore(fromJsonMl(['h1', title]), document.body.firstChild);
 	});

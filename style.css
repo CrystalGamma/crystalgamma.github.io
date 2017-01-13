@@ -1,1 +1,9 @@
-body {font-family:sans} 
+body {font-family:sans}
+h1, h2, h3, h4, h5, h6 {width:80rem;margin:1.5em auto 0.5em}
+p, ul {margin:1em auto;width:60rem;color:#333;line-height:1.5}
+li {margin:0.5em 0 0.5em 1em}
+code {display:block;white-space:pre;overflow-x:auto;background:#ccc;color:black;font-family:sans;width:80rem;margin:0 auto;padding:1em}
+p code {display:inline;padding:0.2em}
+a:link {text-decoration:none;color:#05f}
+a:hover, a:active {color:#e70}
+span.cli {background:black;color:white;font-family:monospace;padding:0.2em}
