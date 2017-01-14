@@ -1,4 +1,4 @@
-;var fromJsonMl = function(){
+;var fromJsonMl = function(){"use strict";
 	var regex = new RegExp('^(.*)([#.])([^#\.]+)$');
 	var has = {}.hasOwnProperty;
 	return function fromJsonMl(jsonml) {
@@ -6,6 +6,7 @@
 			var tag = jsonml[0];
 			if (typeof tag === 'string') {
 				var attributes = jsonml[1], start = 1, len = jsonml.length|0, ids = [], classes = [], match;
+				attributes = attributes || {};
 				var ids = attributes.id ? attributes.id.split(' ') : [];
 				var classes = attributes.class ? attributes.class.split(' '): [];
 				while (match = regex.exec(tag)) {
@@ -27,7 +28,7 @@
 				}
 				if (ids.length) {el.id = ids.join(' ')}
 				if (classes.length) {el.className = classes.join(' ')}
-				for (; start < len; start = start + 1|0) {
+				for (; start < len; start += start + 1|0) {
 					var x = fromJsonMl(jsonml[start]);
 					el.appendChild(x);
 				}

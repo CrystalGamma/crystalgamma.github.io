@@ -1,7 +1,7 @@
 body, code {font-family:sans-serif}
 
 /* horizontal centering and width */
-body {max-width:80em;width:100%;margin:0 auto}
+body:not(.enhanced), main {max-width:80em;width:100%;margin:0 auto}
 p, ul {max-width: 45em;margin:1em auto}
 
 h1, h2, h3, h4, h5, h6 {margin-top:1.5em;margin-bottom:.5em}
