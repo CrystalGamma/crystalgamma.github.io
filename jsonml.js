@@ -1,7 +1,7 @@
 ;var fromJsonMl = function(){"use strict";
 	var regex = new RegExp('^(.*)([#.])([^#\.]+)$');
 	var has = {}.hasOwnProperty;
-	return function fromJsonMl(jsonml) {
+	var fromJsonMl = function fromJsonMl(jsonml) {
 		if (Array.isArray(jsonml)) {
 			var tag = jsonml[0];
 			if (typeof tag === 'string') {
@@ -17,10 +17,17 @@
 					}
 					tag = match[1];
 				}
-				var el = document.createElement(tag);
-				if (attributes && typeof attributes === 'object' && !Array.isArray(attributes)) {
+				var pos = tag.indexOf(':')
+				var el = pos >= 0
+					? document.createElementNS(fromJsonMl.nameSpaces[tag.substring(0, pos)], tag.substring(pos+1))
+					: document.createElement(tag || 'div');
+				if (attributes && typeof attributes === 'object' && !Array.isArray(attributes) && !(attributes instanceof Node)) {
 					for (var attr in attributes) {if (has.call(attributes, attr)) {
-						if (attr != 'id' && attr != 'class') {
+						if (attr === 'id' || attr === 'class') {continue}
+						pos = attr.indexOf(':');
+						if (pos >= 0) {
+							el.setAttributeNS(fromJsonMl.nameSpaces[attr.substring(0, pos)], attr.substring(pos+1), attributes[attr]);
+						} else {
 							el.setAttribute(attr, attributes[attr]);
 						}
 					}}
@@ -28,7 +35,7 @@
 				}
 				if (ids.length) {el.id = ids.join(' ')}
 				if (classes.length) {el.className = classes.join(' ')}
-				for (; start < len; start += start + 1|0) {
+				for (; start < len; start += 1) {
 					var x = fromJsonMl(jsonml[start]);
 					el.appendChild(x);
 				}
@@ -42,4 +49,6 @@
 			return jsonml;
 		}
 	};
+	fromJsonMl.nameSpaces = Object.create(null);
+	return fromJsonMl;
 }();
