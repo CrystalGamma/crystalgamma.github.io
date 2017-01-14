@@ -1,6 +1,7 @@
 body, code {font-family:sans-serif}
 
 /* horizontal centering and width */
+body.enhanced {margin:0;padding:0}
 body:not(.enhanced), main {max-width:80rem;width:100%;margin:0 auto}
 p, ul {max-width: 45rem;margin:1em auto}
 
@@ -18,6 +19,7 @@ header img, header svg {height:1.5rem;width:auto}
 
 h1, h2, h3, h4, h5, h6 {margin-top:1.5em;margin-bottom:.5em}
 h1:first-child {margin-top:.5em}
+p {padding:0 .5em}
 p, ul {color:#333;line-height:1.5}
 ul {padding:.25em 0.2em .25em 2em}
 code {display:block;white-space:pre;overflow-x:auto;background:#ccc;color:black;padding:1em}
